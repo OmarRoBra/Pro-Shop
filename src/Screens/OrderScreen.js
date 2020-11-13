@@ -4,15 +4,13 @@ import {Link} from 'react-router-dom'
 import {PayPalButton} from 'react-paypal-button-v2'
 import {Button,Row,ListGroup,Card,Col,Image } from 'react-bootstrap'
 import {useDispatch,useSelector} from 'react-redux'
-import Forms from '../components/Items/Forms' 
-import CheckOutSteps from '../components/Items/CheckOutSteps'
-import {detailOrder, payOrder} from '../actions/orderActions'
+import {detailOrder, payOrder,deliverOrder} from '../actions/orderActions'
 import Message from '../components/message'
 import Loader from '../components/loader'
-import {ORDER_PAY_RESET} from '../consts/orderConts'
+import {ORDER_PAY_RESET,ORDER_DELIVERED_RESET} from '../consts/orderConts'
 
 
-export function OrderScreen({match}) {
+export function OrderScreen({match,history}) {
     const orderId= match.params.id
 
     const[sdkReady,setSDKReady]=useState(false)
@@ -22,10 +20,21 @@ export function OrderScreen({match}) {
     const payed= useSelector(state => state.payment)
     const {sucess,loading:loadingPay}=payed         
 
+    const delivered= useSelector(state => state.deliverOrder)
+    const {sucess:deliveredSuccess,loading:deliveredLoading}=delivered
+
+    const detailUser= useSelector(state=>state.user)
+    const {userInfo}=detailUser
+
     const orderDetails= useSelector(state => state.orderDetail)
-    const {error,orders,loading}=orderDetails          //ACUMULADOR/ITERADOR
+    const {error,orders,loading}=orderDetails          
    
+    
     useEffect(() => {
+        if(!userInfo){
+            history.push('/signin')
+        }
+        
         const addPayPalScript= async()=>{
             const {data:clientId}= await clienteAxios.get('/api/config/paypal')
             console.log(clientId)
@@ -37,9 +46,12 @@ export function OrderScreen({match}) {
                 setSDKReady(true)
             }
             document.body.appendChild(script)
+
         }
-        if(!orders ||sucess){
+        
+        if(!orders ||sucess || deliveredSuccess|| orders._id !== orderId){
             dispatch({type:ORDER_PAY_RESET})
+            dispatch({type:ORDER_DELIVERED_RESET})
             dispatch(detailOrder(orderId))
             console.log(orders)
         }else if(!orders.isPaid){
@@ -51,12 +63,15 @@ export function OrderScreen({match}) {
         }
     
       
-    }, [dispatch,orderId,sucess,orders])
+    }, [dispatch,orderId,sucess,orders,history,deliveredSuccess])
     if(!loading) orders.ItemsPrice=orders.orderItems.reduce((acc,item)=>acc + item.price * item.qty,0)
     
     const sucessPayment =(paymentResult)=>{
       console.log(paymentResult)
       dispatch(payOrder(orderId,paymentResult))
+    }
+    const deliverHandler=()=>{
+        dispatch(deliverOrder(orders))
     }
 return loading?<Loader /> : error ? <Message variant='danger'>{error}</Message>
 : <> <h1>Order {orders.id}</h1>
@@ -74,7 +89,7 @@ return loading?<Loader /> : error ? <Message variant='danger'>{error}</Message>
                           {orders.shippingAdress.postalCode},{' '}
                           {orders.shippingAdress.country}
                       </p>
-                      {orders.isDeliverided ? <Message variant='sucess'>Paid on {orders.deliveredAt}</Message>:<Message variant='danger'>Not Delivered Yet</Message> }
+                      {orders.isDelivereded? <Message variant='success'>Delivered on {orders.deliveredAt}</Message>:<Message variant='danger'>Not Delivered Yet</Message> }
                   </ListGroup.Item>
                   <ListGroup.Item>
                       <h2>Payment Method</h2>
@@ -154,6 +169,13 @@ return loading?<Loader /> : error ? <Message variant='danger'>{error}</Message>
                             
                             </PayPalButton>)
                      }
+                 </ListGroup.Item>
+             )}
+             {userInfo.isAdmin && orders.isPaid && !orders.isDelivered && (
+                 <ListGroup.Item>
+                     <Button type ='button' className='btn btn-block' onClick={deliverHandler}>
+                         Mark as Delivered
+                     </Button>
                  </ListGroup.Item>
              )}
               </ListGroup>

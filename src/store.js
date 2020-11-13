@@ -1,11 +1,11 @@
 import {createStore,combineReducers,applyMiddleware  } from 'redux'
 import thunk from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import {productReducer} from './Reducers/productReducers'
+import {productReducer,productDeleteReducer,createProductReducer,productUpdateReducer} from './Reducers/productReducers'
 import {productDetail } from './Reducers/productDetailReducer'
 import {cartReducer} from './Reducers/cartsReducer'
-import {userReducer,registerReducer,DataReducer,updateReducer} from './Reducers/userReducer'
-import {orderReducer,getOrderReducer,payOrderReducer} from './Reducers/ordersReducer'
+import {userReducer,registerReducer,DataReducer,updateReducer,getUsersList,deleteReducer,updateById} from './Reducers/userReducer'
+import {orderReducer,getOrderReducer,payOrderReducer,getOrdersOfUser,getAdminOrders,deliveredOrderReducer} from './Reducers/ordersReducer'
 
 //Con combine reducers combinamos todos estos
 //ya que redux solo admite un solo STORE
@@ -17,9 +17,19 @@ const reducer =  combineReducers({
     registro:registerReducer,
     userDetail:DataReducer,
     userUpdated:updateReducer,
+    userUpdates:updateById,
     order:orderReducer,
     orderDetail:getOrderReducer,
-    payment:payOrderReducer
+    payment:payOrderReducer,
+    userOrders:getOrdersOfUser,
+    userList:getUsersList,
+    deleteUser:deleteReducer,
+    productDelete:productDeleteReducer,
+    productCraeted:createProductReducer,
+    productUpdated:productUpdateReducer,
+    adminOrders:getAdminOrders,
+    deliverOrder:deliveredOrderReducer
+
 })
 //revisamos si existe algun registro dentro del local storage si existe este sera el valor inicial de nuestro state
 const cartItemsStorage= localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) :[]
