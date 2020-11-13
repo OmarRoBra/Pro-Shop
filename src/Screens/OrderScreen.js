@@ -21,7 +21,7 @@ export function OrderScreen({match,history}) {
     const {sucess,loading:loadingPay}=payed         
 
     const delivered= useSelector(state => state.deliverOrder)
-    const {sucess:deliveredSuccess,loading:deliveredLoading}=delivered
+    const {sucess:deliveredSuccess}=delivered
 
     const detailUser= useSelector(state=>state.user)
     const {userInfo}=detailUser
@@ -62,7 +62,7 @@ export function OrderScreen({match,history}) {
             }
         }
     
-      
+       // eslint-disable-next-line
     }, [dispatch,orderId,sucess,orders,history,deliveredSuccess])
     if(!loading) orders.ItemsPrice=orders.orderItems.reduce((acc,item)=>acc + item.price * item.qty,0)
     

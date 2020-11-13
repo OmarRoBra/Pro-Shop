@@ -1,17 +1,15 @@
-import React,{useState,useEffect} from 'react'
+import React,{useEffect} from 'react'
 import{LinkContainer} from 'react-router-bootstrap'
 import{Table,Button,Row,Col} from 'react-bootstrap'
 import {useDispatch,useSelector} from 'react-redux'
-import Message from '../components/message'
 import Loader from '../components/loader'
-import {deleteById} from '../actions/productActions'
 import {adminOrders} from '../actions/orderActions'
 import {ORDERS_ADMIN_RESET} from '../consts/orderConts'
 
 function Orderlist(history) {
     const dispatch = useDispatch()
     const orderLists=useSelector(state=>state.adminOrders)
-    const{loading,error,orders}= orderLists
+    const{loading,orders}= orderLists
 
     const userLogin=useSelector(state => state.user)
     const{userInfo}=userLogin
@@ -27,16 +25,8 @@ function Orderlist(history) {
             dispatch(adminOrders())
         }
         
-        
+        // eslint-disable-next-line
     },[dispatch,history])
-
-    const deleteHandler=(id)=>{
-       
-
-    }
-    const createNewProduct=()=>{
-      
-    }
     return (
         <>
         <Row className='align-items-center'>
@@ -45,7 +35,7 @@ function Orderlist(history) {
             </Col>
            
         </Row>
-        <Table striped bordered hover responsive className='table-sm'>
+        {loading ? <Loader/> : (<Table striped bordered hover responsive className='table-sm'>
             <thead>
                 <tr>
                   <th>ID</th>
@@ -77,7 +67,7 @@ function Orderlist(history) {
                     </tr>
                 ))}
             </tbody>
-        </Table>
+        </Table>)}
     )
             
         </>

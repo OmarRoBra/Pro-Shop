@@ -1,10 +1,10 @@
 import clienteAxios from '../config/axios'
 import {ORDER_CREATE_FAILS,ORDER_CREATE_REQUEST,ORDER_CREATE_SUCESS,
     ORDER_GET_FAILS,ORDER_GET_REQUEST,ORDER_GET_SUCESS,
-ORDER_PAY_FAILS,ORDER_PAY_REQUEST,ORDER_PAY_SUCESS,ORDER_PAY_RESET,ORDER_OFUSER_FAILS,
+ORDER_PAY_FAILS,ORDER_PAY_REQUEST,ORDER_PAY_SUCESS,ORDER_OFUSER_FAILS,
 ORDER_OFUSER_REQUEST,ORDER_OFUSER_SUCESS,
-ORDERS_ADMIN_FAILS,ORDERS_ADMIN_REQUEST,ORDERS_ADMIN_RESET,ORDERS_ADMIN_SUCCESS,
-ORDER_DELIVERED_FAILS,ORDER_DELIVERED_REQUEST,ORDER_DELIVERED_RESET,ORDER_DELIVERED_SUCESS} from '../consts/orderConts'
+ORDERS_ADMIN_FAILS,ORDERS_ADMIN_REQUEST,ORDERS_ADMIN_SUCCESS,
+ORDER_DELIVERED_FAILS,ORDER_DELIVERED_REQUEST,ORDER_DELIVERED_SUCESS} from '../consts/orderConts'
 
 export const createOrder=(order)=>async(dispatch,getState)=>{
     try {
@@ -195,7 +195,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
     } catch (error) {
         console.log(error)
         dispatch({
-            type:ORDERS_ADMIN_FAILS,
+            type:ORDER_DELIVERED_FAILS,
             payload:error.response && error.response.data.message
             ?error.response.data.message
             :error.message

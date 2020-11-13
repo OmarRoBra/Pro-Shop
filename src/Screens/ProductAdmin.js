@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useEffect} from 'react'
 import{LinkContainer} from 'react-router-bootstrap'
 import{Table,Button,Row,Col} from 'react-bootstrap'
 import {useDispatch,useSelector} from 'react-redux'
@@ -20,7 +20,7 @@ function ProductAdmin({history}) {
     const{success:productSucess,product:cProduct}=created
 
     const deleteinfo=useSelector(state => state.productDelete)
-    const{loading:loadingError, success:sucessDelete}=deleteinfo
+    const{ success:sucessDelete}=deleteinfo
 
    
     useEffect(()=>{
@@ -36,7 +36,7 @@ function ProductAdmin({history}) {
             dispatch(listProducts())
         }
         
-        
+         // eslint-disable-next-line
     },[dispatch,history,sucessDelete,productSucess,cProduct])
 
     const deleteHandler=(id)=>{

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import{Form,Button, Col,Row} from 'react-bootstrap'
+import{Form,Button} from 'react-bootstrap'
 import {useDispatch,useSelector } from 'react-redux'
 import Message from '../components/message'
 import Loader from '../components/loader'
@@ -22,7 +22,7 @@ function ProductEdit({match,history}) {
  
      const dispatch = useDispatch();
 
-     const  productDetail =useSelector(state => state. productDetails)
+     const  productDetail=useSelector(state => state. productDetails)
      const{loading,error,product}=productDetail
 
      const  update =useSelector(state => state.productUpdated)

@@ -1,4 +1,4 @@
-import {PRODUCTS_FAILS,PRODUCT_SUCESS,PRODUCT_LIST_REQUEST,PRODUCTS_DETAIL_FAILS,
+import {PRODUCTS_DETAIL_FAILS,
     PRODUCT_DETAIL_REQUEST,PRODUCT_DETAIL_SUCESS} from '../consts/productConsts'
 
     export const productDetail=(state={product:{}},action)=>{

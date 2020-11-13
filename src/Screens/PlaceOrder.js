@@ -1,8 +1,7 @@
-import React,{useState,useEffect} from 'react'
+import React,{useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {Button,Row,ListGroup,Card,Col,Image } from 'react-bootstrap'
 import {useDispatch,useSelector} from 'react-redux'
-import Forms from '../components/Items/Forms' 
 import CheckOutSteps from '../components/Items/CheckOutSteps'
 import {createOrder} from '../actions/orderActions'
 export function PlaceOrder({history}) {
@@ -18,7 +17,7 @@ export function PlaceOrder({history}) {
     console.log(cart)
 
     const orderCreate=useSelector(state=>state.order)
-    const {orders,success,error}=orderCreate
+    const {orders,success}=orderCreate
 
     console.log(orderCreate)
     const clickHandler=(e)=>{
@@ -38,7 +37,7 @@ export function PlaceOrder({history}) {
         if(success){
             history.push(`/order/${orders._id}`)
         }
-      
+      // eslint-disable-next-line
     }, [history,success])
     return (
         <>

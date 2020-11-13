@@ -37,7 +37,7 @@ export const CartScreen = ({match,location,history}) => {
         <Row>
         <Col md={8}>
             <h1>Shopping cart</h1>
-            {cartItems.length==0 ?(<Message>Tu Carrito está Vacio <Link to='/'>Go back</Link> </Message>):(
+            {cartItems.length===0 ?(<Message>Tu Carrito está Vacio <Link to='/'>Go back</Link> </Message>):(
                 
                 <ListGroup variant='flush'>
                 {cartItems.map(item=>(
@@ -80,7 +80,7 @@ export const CartScreen = ({match,location,history}) => {
                         $ {cartItems.reduce((acc,item)=>acc+item.qty * item.price,0)}
                     </ListGroup.Item>
                     <ListGroup.Item>
-                       <Button type='button' className='btn-block' disabled={cartItems.length==0?true:false} onClick={checkoutHandler}>Buy</Button>
+                       <Button type='button' className='btn-block' disabled={cartItems.length===0?true:false} onClick={checkoutHandler}>Buy</Button>
                      </ListGroup.Item>
                 </ListGroup>
             </Card>

@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
-import {Row,Col,Image,Button,ListGroup,Card, ListGroupItem,Form } from 'react-bootstrap'
+import {Row,Col,Image,Button,ListGroup,Card,Form } from 'react-bootstrap'
 import {useDispatch,useSelector} from  'react-redux'
 import {detailedProdcut} from '../actions/productActions'
 import Rating from '../components/Items/Rating'
@@ -10,7 +10,7 @@ export const ProductScreen = ({history,match}) => {
    
    const dispatch=useDispatch();
    const producDetail=useSelector(state=>state.productDetails)
-    const{loading,error,product}=producDetail
+    const{product}=producDetail
 
    useEffect(() => {
        dispatch(detailedProdcut(match.params.id))
@@ -81,7 +81,7 @@ export const ProductScreen = ({history,match}) => {
                         </ListGroup.Item>
                     )}
                     <ListGroup.Item>
-                        <Button className="btn-block" type='button'  onClick={savetoCart} disabled={product.stock==0?true:false}  > 
+                        <Button className="btn-block" type='button'  onClick={savetoCart} disabled={product.stock===0?true:false}  > 
                            Add to cart
                         </Button>
                     </ListGroup.Item>

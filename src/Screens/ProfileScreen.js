@@ -1,12 +1,10 @@
 
 import React,{useState,useEffect} from 'react'
-import {Link} from 'react-router-dom'
 import {LinkContainer} from 'react-router-bootstrap'
 import{Form,Button, Col,Row,Table} from 'react-bootstrap'
 import {useDispatch,useSelector } from 'react-redux'
 import Message from '../components/message'
 import Loader from '../components/loader'
-import Forms from '../components/Items/Forms'
 import {update,userDetails} from '../actions/userActions'
 import {userOrders} from '../actions/orderActions'
 function ProfileScreen({location,history}) {
