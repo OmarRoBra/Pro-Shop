@@ -22,11 +22,11 @@ function ProductEdit({match,history}) {
  
      const dispatch = useDispatch();
 
-     const  productDetail=useSelector(state => state. productDetails)
+     const productDetail=useSelector(state=> state.productDetails)
      const{loading,error,product}=productDetail
 
-     const  update =useSelector(state => state.productUpdated)
-     const{loading:loadingUpdated,error:errorUpdated,product:productUpdated,success}=update
+     const update=useSelector(state=> state.productUpdated)
+     const{success}=update
 
      useEffect(()=>{
          if(success){

@@ -5,6 +5,7 @@ import {USER_LOGIN_FAILS,USER_LOGIN_SUCESS,USER_LOGIN_REQUEST,USER_LOGOUT,USER_R
     USER_UPDATES_FAILS,USER_UPDATES_REQUEST,USER_UPDATES_SUCESS} from '../consts/userConsts'
     import {ORDER_OFUSER_RESET} from '../consts/orderConts'
 import clienteAxios from '../config/axios'
+
 export const login=(email,password)=>async(dispatch)=>{
     try {
         dispatch({
@@ -36,7 +37,7 @@ export const login=(email,password)=>async(dispatch)=>{
 export const register=(name,email,password)=>async(dispatch)=>{
     try {
         dispatch({
-            type:USER_LOGIN_REQUEST
+            type:USER_REGISTER_REQUEST
         })
         const config ={
             headers:{
@@ -47,14 +48,14 @@ export const register=(name,email,password)=>async(dispatch)=>{
         const {data}= await clienteAxios.post('/api/v1/auth/register',{name,email,password},config)
         console.log(data)
         dispatch({
-            type:USER_LOGIN_SUCESS,
+            type:USER_REGISTER_SUCESS,
             payload:data
         })
         localStorage.setItem('userInfo',JSON.stringify(data))
     } catch (error) {
         console.log(error)
         dispatch({
-            type:USER_LOGIN_FAILS,
+            type:USER_REGISTER_FAILS,
             payload:error.response && error.response.data.message
             ?error.response.data.message
             :error.message
